@@ -1,5 +1,5 @@
 //
-//  RantingView.swift
+//  RatingView.swift
 //
 //
 //  Created by Chris Spradling on 2/23/20.
@@ -7,6 +7,23 @@
 
 import Combine
 import SwiftUI
+
+@propertyWrapper
+struct Rating<Scale: Numeric&Comparable> {
+    
+    private let maxValue: Scale = .zero
+    
+    private var value: Scale
+    var wrappedValue: Scale {
+        get { return value }
+        set { value = min(max(.zero, newValue), maxValue) }
+    }
+    
+    func reset() {
+        value = .zero
+    }
+    
+}
 
 public struct RatingView: View {
     
